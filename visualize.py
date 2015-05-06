@@ -33,9 +33,13 @@ def propagate(r):
         lin = np.linspace(xLeft, xRight, sim.dimensions)
         psi = (30/xRight**5)**0.5 * lin * (xRight - lin)
         count +=1
+        
+    #Actual plotting logic starts here    
     fig.clf()                       #clear figure
     ax1 = fig.add_subplot(2,1,1)    #I want two plots in the same figure
     ax2 = fig.add_subplot(2,1,2)    #I want two plots in the same figure
+    
+    
     psi, info= sim.evolve(psi)      #Evolve psi
     z = [(i.real**2 + i.imag**2)**0.5 for i in psi]     #calculate modulus of psi
     x = np.arange(0,(sim.dimensions)*sim.chi ,sim.chi)  #Position
@@ -46,12 +50,16 @@ def propagate(r):
     #If the user passed a third letter to parser (optional)
     if len(args.visualize) == 3:
         Y3 = placeInPlot[args.visualize[2]] ##Assign to Y3 the function corresponding to the the third letter passed to parser.
+        
         s1 = ax1.scatter(x,Y1,c=Y3,linewidth = 0,s = 80) #Show Y1(x) in the first plot. Assign a color to the markers according to the value of Y3.
         s2 = ax2.scatter(x,Y2,c=Y3,linewidth = 0,s = 80) #Show Y2(x) in the second plot. Assign a color to the markers according to the value of Y3.
+        
         cb1 = plt.colorbar(mappable=s1,ax=ax1)  #Show colorbar in first plot
         cb2 = plt.colorbar(mappable=s2,ax=ax2)  #Show colorbar in second plot
+        
         cb1.set_label(plotLabels[args.visualize[2]]) #Show in the colorbar of plot1 the label corresponding to the the first letter passed to parser.
         cb2.set_label(plotLabels[args.visualize[2]]) #Show in the colorbar of plot2 the label corresponding to the the second letter passed to parser.
+        
         ax1.plot(x,Y1,linewidth=0.1)    #Plot a thin line (superimposed to the scatter plot) so that we can see which data-point is connected to each other.
         ax2.plot(x,Y2,linewidth=0.2)    #same as above, for plot2
     #If the user passed only two arguments to parser

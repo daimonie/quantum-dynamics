@@ -7,7 +7,7 @@ sim = simulation()
 
 sim.mass = 1.0 
 sim.chi = 1e-4  #just dx
-sim.tau = 1e-2 
+sim.tau = 4e-5 
 sim.hbar = 1.0  #scc.hbar
 sim.dimensions =  1000 
 
@@ -16,11 +16,10 @@ sim.init()
 xRight = 1e-9 ;
 xLeft = 0;
 
-lin = np.linspace(xLeft, xRight, sim.dimensions);
-psi = (30/xRight**5)**0.5 * lin * (xRight - lin); 
-for i in range(1,10): 
-    psi, info= sim.evolve(psi) ;
-    if info == 0:  
-        print i, psi
-    else:
-        raise Exception("For some reason, the tolerance wasn't reached.");
+lin = np.linspace(xLeft,xRight, sim.dimensions);
+psi = 1/(45000.0) * (30/xRight**5)**0.5 * lin * (xRight - lin); 
+
+sim.setPsi(lin, psi)
+#sim.potential()
+#sim.potentialTime()
+sim.show();
