@@ -42,13 +42,15 @@ class simulation:
     
         #Calculations
         self.H = -2*sparse.eye(self.dimensions, self.dimensions) +sparse.eye(self.dimensions, self.dimensions, k=1) + sparse.eye(self.dimensions, self.dimensions, k=-1) 
-        self.H.toarray() 
+        #self.H.toarray() 
         
-        self.prefactor = 1j * self.hbar * self.tau / 4.0 / self.mass / (self.chi)**2  
+        self.prefactor = 1j * self.hbar * self.tau / 4.0 / self.mass / (self.chi)**2   
         
         self.L = sparse.eye(self.dimensions,self.dimensions) + self.prefactor * self.H 
         self.R = sparse.eye(self.dimensions,self.dimensions) - self.prefactor * self.H
             
+        #U = self.R.H / self.L
+        #print U * U.H
     def evolve(self): 
         self.psi, info = ssl.bicgstab(self.L, self.R * self.psi, x0=self.psi, tol=1e-10);
         #Time-dependent potential logic
@@ -123,7 +125,7 @@ class simulation:
             self.line3.set_ydata( normPsi )
             self.line4.set_ydata( self.potential );
         
-        print "Animation frame %d .." % (r);
+        print "Animation frame %d . Norm surface %2.3e" % (r, np.sum(np.square(normPsi))*self.chi);
     def show(self):
         
         ani = animation.FuncAnimation(self.fig, self.propagate,interval=100) 
