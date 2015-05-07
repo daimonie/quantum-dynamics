@@ -105,9 +105,8 @@ class simulation:
             exponentPotential = np.exp( -1j*self.tau * self.potential / self.hbar );
             
             self.psi = np.multiply(exponentPotential, self.psi)
-        
-        if r == 0:
-            self.ax4.set_ylim( [np.min(self.potential), np.max(self.potential)] );
+         
+        self.ax4.set_ylim( [np.min(self.potential), np.max(self.potential)] ); 
         
         #Now plot it 
         realPsi = np.real(self.psi);
@@ -124,7 +123,7 @@ class simulation:
             self.line3.set_ydata( normPsi )
             self.line4.set_ydata( self.potential );
         
-        print "Animation frame %d, prefactor is %2.3e." % (r, np.absolute(self.prefactor));
+        print "Animation frame %d .." % (r);
     def show(self):
         
         ani = animation.FuncAnimation(self.fig, self.propagate,interval=100) 
