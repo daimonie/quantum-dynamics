@@ -36,6 +36,9 @@ class simulation:
     space               = None
     potentialCallback   = None
     potential           = None
+    
+    argsPotential   = None
+    
     def init(self):
         #Display logic
         self.initFigure()
@@ -100,7 +103,7 @@ class simulation:
         
         #Note that I have no idea why it has the initial psi fixed. It does look good, so I'm not going to try and fix it.
         #First, evolve
-        self.potential = self.potentialCallback( self.space, self.tau, r) 
+        self.potential = self.potentialCallback( self.space, self.tau, r, self.argsPotential) 
         if r != 0:
             self.evolve();        
             
