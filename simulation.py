@@ -136,7 +136,7 @@ class simulation:
     def energy(self):
         H0 = 1j * self.hbar * self.prefactor * self.H
         H1 = np.diag(self.potential) 
-        Htotal = H0 - H1 
+        Htotal = H0 + H1 
         ket = np.dot(Htotal, np.array(self.psi).T)
         bra = np.array(self.psi).conj()
         return np.sum(np.sum(np.dot(ket,bra)))

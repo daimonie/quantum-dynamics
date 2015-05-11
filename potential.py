@@ -51,3 +51,9 @@ def potential(lin, tau, r, potNumber):
         for i in range( int( (0.7 + 6*width)*np.size(lin) ) , int( (0.7 + 7*width)*np.size(lin) )):
             v[i] = height
         return v
+    elif potNumber == 7:
+        potential = -(lin - np.min(lin)) * (lin-np.max(lin));
+        potential /= np.max(potential);
+        potential *= 1e-31;
+        
+        return potential
