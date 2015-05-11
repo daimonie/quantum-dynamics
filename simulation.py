@@ -126,11 +126,17 @@ class simulation:
             self.line1.set_ydata( realPsi )
             self.line2.set_ydata( imagPsi )
             self.line3.set_ydata( normPsi )
-            self.line4.set_ydata( self.potential );
-        
-        print "Animation frame %d . Norm surface %2.3e" % (r, np.sum(np.square(normPsi))*self.chi);
+            self.line4.set_ydata( self.potential ); 
+        print "Animation frame %d . Norm surface %2.3e . Energy %2.3e" % (r, np.sum(np.square(normPsi))*self.chi,  self.energy());
     def show(self):
         
         ani = animation.FuncAnimation(self.fig, self.propagate,interval=100) 
         
         plt.show()
+    def energy(self):
+        H0 = 1j * self.hbar * self.prefactor * self.H
+        H1 = np.diag(self.potential) 
+        Htotal = H0 - H1 
+        ket = np.dot(Htotal, np.array(self.psi).T)
+        bra = np.array(self.psi).conj()
+        return np.sum(np.sum(np.dot(ket,bra)))
