@@ -12,6 +12,7 @@ parser = argparse.ArgumentParser(prog="python main.py",
 parser.add_argument('-p', '--potential', help='Choose the form of the potential. 1: parabolic, 2: infinite wall, 3: finite walls, 4: ramp, 5: moving semi-circle, 6: constant.', default = 3, action='store', type = int);
 parser.add_argument('-w', '--waveFunc', help='Choose the form of psi. 1: gaussian, 2: parabola, 3: triangle, 4: sines/cosines.', default = 4, action='store', type = int);
 parser.add_argument('-tm', '--timemultiply', help='Speed up the animation with $value$. This multiplies the tau by $value$.', default = 1.0, action='store', type = float);
+parser.add_argument('-dm', '--dimensionmultiply', help='Multiply the number of dimensions by value.', default = 1, action='store', type = int);
 args = parser.parse_args();
 
 sim = simulation() 
@@ -22,7 +23,7 @@ sim.mass = scc.m_e
 sim.argsPotential = args.potential
 
 
-sim.dimensions =  1000
+sim.dimensions =  1000 * args.dimensionmultiply
 sim.chi = 1e-9/sim.dimensions  #just dx
 #1e-18 accounts for mass and the nm, while the sim.dimensions**-2 accounts for the parameters of the simulation.
 #The last number, 0.1 at the time of writing, is the timestep in the simulation in a way that makes sense.
